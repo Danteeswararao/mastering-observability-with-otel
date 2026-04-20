@@ -1,0 +1,31 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch:
+
+exporters:
+  otlphttp/metrics:
+    endpoint: "https://otlp-gateway-prod-gb-south-1.grafana.net/v1/metrics"
+    headers:
+      authorization: "Basic MTU5OTk4MzpnbGNfZXlKdklqb2lNVGN6TmpNNU1pSXNJbTRpT2lKemRHRmpheTB4TlRrNU9UZ3pMV0ZzYkc5NUxYUnlZV05sSWl3aWF5STZJamxZVUhkSmNEUTFPRVEzUlZGUk1ESTFhM2hpTjJrMWVDSXNJbTBpT25zaWNpSTZJbkJ5YjJRdFoySXRjMjkxZEdndE1TSjlmUT09"
+
+  otlphttp/logs:
+    endpoint: "https://otlp-gateway-prod-gb-south-1.grafana.net/v1/logs"
+    headers:
+      authorization: "Basic MTU5OTk4MzpnbGNfZXlKdklqb2lNVGN6TmpNNU1pSXNJbTRpT2lKemRHRmpheTB4TlRrNU9UZ3pMV0ZzYkc5NUxYUnlZV05sSWl3aWF5STZJamxZVUhkSmNEUTFPRVEzUlZGUk1ESTFhM2hpTjJrMWVDSXNJbTBpT25zaWNpSTZJbkJ5YjJRdFoySXRjMjkxZEdndE1TSjlmUT09"
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp/metrics]
+
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp/logs]
